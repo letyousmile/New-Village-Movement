@@ -7,3 +7,8 @@
 ## Java(쌉초보)
 
 - [DI(Dependency Injection, 의존성주입)](./01_java/DI.md)
+
+
+## Network(왕초보)
+
+- [Socket Programming](./02_network/socket.md)
