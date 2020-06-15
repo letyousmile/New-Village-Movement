@@ -64,4 +64,47 @@ DUAL TABLE은 더미컬럼 하나로 구성되어 있다.
     ```sql
     SELECT TO_NUMBER('1230400', '9,999,999') FROM DUAL
     ```
-    
+### NULL 값을 다루는 함수
+- `NVL(컬럼, 디폴트)`: 컬럼값이 NULL일 경우 디폴트 값으로 바꿔주는 함수 
+### 선택을 위한 함수
+- `DECODE(컬럼,조건1,값1,조건2,값2,...,아무조건도 아닐경우 값)`: 컬럼 값이 해당 조건과 같을 경우 해당하는 값을 출력하는 함수
+    ```sql
+    SELECT DECODE(ACCNT_NO, 10, '인사팀', 11, '개발팀', 12, '운영팀', '냐머지팀') AS DEPT FROM EMPLOYEES
+    ```
+### 조건에 따른 처리를 위한 함수
+- `CASE WHEN 조건 THEN 값1 ... ELSE 값2 END`: 조건에 맞는 값을 뱉는 함수 
+    ```sql
+    SELECT CASE
+           WHEN SCORE >= 90 THEN
+           'A'
+           WHEN SCORE >= 80 THEN
+           'B'
+           WHEN SCORE >= 70 THEN
+           'C'
+           ELSE
+           'D'
+           END              AS GRADE
+           FROM STUDENTS
+    ```
+
+## 복수행(그룹) 함수
+- 복수행(그룹) 함수의 특징 중 하나는 NULL값을 제외하고 연산한다는 것
+- `SUM(컬럼)`: 해당 컬럼 값의 총합을 구하는 함수
+    ```sql
+    -- 모든 학생들의 점수 총합
+    SELECT SUM(SCORE) FROM STUDENTS 
+    ```
+- `AVG(컬럼)`: 해당 컬럼 값의 평균을 구하는 함수
+    ```sql
+    -- 모든 학생들의 점수 평균
+    SELECT AVG(SCORE) FROM STUDENTS
+    ```
+- `MAX(컬럼)`: 해당 컬럼 값 중 최대값
+- `MIN(컬럼)`: 해당 컬럼 값 중 최소값
+- `COUNT(컬럽)`: 해당 컬럼에 값이 있는 로우의 개수를 COUNT한다.
+    ```sql
+    -- 중복되지 않은 업무의 종류를 카운트
+    SELECT COUNT(DISTINCT JOB) FROM EMP;
+    ```
+- `GROUP BY 컬럼1, 컬럼2,...`: 특정 컬럼을 기준으로 그룹화하여 테이블에 존재하는 행동을 그룹별로 구분하기 위해 사용. `GROUP BY`절을 사용할 떄는 그룹으로 묶은 컬럼 또는 그룹함수를 사용하여 `SELECT`하여야 한다. 그렇지 않을 경우 "GROUP BY 표현식이 아닙니다" 라는 오류를 뱉는다.
+- `HAVING 조건`: `WHERE`절과 비슷하지만 `HAVING`은 `GROUP BY`절에 의해 생성된 결과 값 중 원하는 조건에 부합하는 자료만 보고싶을 때 사용한다. 그러므로 조건 또한 `SELECT`와 마찬가지로 `GROUP BY` 로 그룹지어진 컬럼 또는 그룹함수를 이용해 작성해야 한다.
