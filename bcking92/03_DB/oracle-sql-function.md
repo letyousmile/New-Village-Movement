@@ -108,3 +108,13 @@ DUAL TABLE은 더미컬럼 하나로 구성되어 있다.
     ```
 - `GROUP BY 컬럼1, 컬럼2,...`: 특정 컬럼을 기준으로 그룹화하여 테이블에 존재하는 행동을 그룹별로 구분하기 위해 사용. `GROUP BY`절을 사용할 떄는 그룹으로 묶은 컬럼 또는 그룹함수를 사용하여 `SELECT`하여야 한다. 그렇지 않을 경우 "GROUP BY 표현식이 아닙니다" 라는 오류를 뱉는다.
 - `HAVING 조건`: `WHERE`절과 비슷하지만 `HAVING`은 `GROUP BY`절에 의해 생성된 결과 값 중 원하는 조건에 부합하는 자료만 보고싶을 때 사용한다. 그러므로 조건 또한 `SELECT`와 마찬가지로 `GROUP BY` 로 그룹지어진 컬럼 또는 그룹함수를 이용해 작성해야 한다.
+
+- `ROLLUP`: 주어진 데이터들의 소계를 구해주는 함수
+    ```sql
+    SELECT DEPTNO, JOB, COUNT(*), SUM(SAL) FROM EMP GROUP BY ROLLUP(DEPTNO, JOB)
+    ```
+
+- `CUBE`: 주어진 데이터들의 소계와 총계를 구해주는 함수 
+    ```sql
+    SELECT DEPTNO, JOB, COUNT(*), SUM(SAL) FROM EMP GROUP BY CUBE(DEPTNO, JOB)
+    ```
