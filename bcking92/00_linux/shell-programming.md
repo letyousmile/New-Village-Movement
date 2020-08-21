@@ -39,3 +39,67 @@ $ python app.py &
 
 # nohup (서버 파일이 백그라운드에서 실행되며 terminal에서 exit하여도 프로세스가 계속 실행됨)
 $ nohup python app.py &
+```
+
+
+## Commands(명령어)
+### System Management
+- [`crontab`](./Cron.md) 링크참조
+- `free`
+    - 메모리 사용량을 확인
+        ```shell
+        $ free
+        $ free -h #단위를 읽기 편하게 바꿔서 출력
+        $ free -s 2 #2초마다 메모리 사용량 출력
+        ```
+
+    - total: 전체 메모리 용량
+    - used: 사용중인 메모리 용량
+    - free: 유휴 메모리 용량
+    - shared: 공유 메모리 용량, 프로세스, 스레드간 통신을 위해 사용
+    - buffers: 버퍼 메모리 용량. 파일 저장을 위한 임시 저장공간 등
+    - cached: 캐쉬 메모리 용량. 자주 사용하는 데이터를 메모리에 캐싱하여 IO 속도 증가
+
+- `jobs`
+    - 현재 계정에서 **실행**중인 작업을 표시
+        ```shell
+        $ jobs
+        $ jobs -l #프로세스 ID를 표시
+        ```
+    - Running: 실행중
+    - Stopped: 일시 중단(Ctrl + Z)
+    - Terminated: 강제 종료(kill로 종료)
+    - Done: 정상종료
+
+- `kill`
+    - 프로세스 종료
+    - `kill` 명령어는 프로세스에 시그널을 전송한다. 시그널을 생략하면 TERM 시그널을 전송하여 프로세스를 종료한다. -9 옵션을 이용하여 프로세스를 강제종료할 수 도 있다.
+
+    - 시그널
+        - 1: HUP, 프로세스에 재기동을 통지
+        - 2: INT, 프로세스에 인터럽트를 통지
+        - 3: QUIT, 프로세스에 종료를 통지
+        - 9: KILL, 프로세스에 강제종료를 통지
+        - 15: TERM, 프로세스에 종료를 통지
+        - 17: STOP, 프로세스에 중단을 통지
+        - 19: CONT, 프로세스에 재개를 통지
+
+    ```shell
+    $ kill -9 %1 # job ID를 이용한 종료
+    $ kill -9 14320 # PDI를 이용한 종료
+    ```
+
+- `man`
+    - 명령어의 메뉴얼을 출력
+        ```shell
+        $ man cp # cp명령어의 메뉴얼을 출력
+        $ man crontab # crontab 명령어의 메뉴얼을 출력
+        ```
+- `nohup`
+    - 리눅스에서 프로그램을 실행할 때 사용자의 세션이 끊어지면(hang up) 프로그램도 함께 종료된다. 처리에 오랜 시간이 걸리는 프로그램을 실행할 때 `nohup`을 이용하여 사용자의 세션이 끊어져도 프로그램은 계속 실행되도록 할 수 있다.
+
+    ```shell
+    $ nohup python app.py &  # app.py를 백그라운드에서 no hang up으로 실행하고 표준 출력을 nohup.out 으로 저장함
+
+    $ nohup python app.py > app.log & # app.py를 백그라운드에서 no hang up으로 실행하고 표준 출력을 app.log에 저장
+    ```
